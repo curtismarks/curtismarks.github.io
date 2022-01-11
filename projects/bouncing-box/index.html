@@ -18,9 +18,7 @@
 		}
 		.board{
 			background: url("images/") no=repeat center center fixed;
-			background-color: #ffffffcc;
-			-webkit-background-size: cover;
-			-moz-
+			background-color: #a81f1fcc;
 			height: 100vh;
 		}
 	</style>
@@ -43,7 +41,7 @@
 			var box = jQuery('.box');	// reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
-            var boardHieght = board.hieght();
+            var boardHeight = jQuery(window).height();
 			// Every 50 milliseconds, call the update Function (see below)
 			setInterval(update, 50);
 			
@@ -83,8 +81,13 @@
 				points = 0 + 1;
 				if (positionX > boardWidth){ 
 					speedX = -speedX;
-				} else if (positionx <0){
-					speedX = -speedX;
+				} else if (positionx < 0){
+					speedX = speedX;
+				}
+				if (positionY > boardHeight){
+					speedY = -speedY;
+				} else if (positionx < 0){
+					speedY = speedY;
 				}
 			};
 
@@ -103,8 +106,13 @@
 				} else {
 					speedX = speedX - 3;
 				}
-
-		}
+				if(speedY >= 0){
+					speedY = speedY + 3;
+				} else {
+					speedY = speedY - 3;
+				}
+			}
+		})()
 	</script>
 </body>
 </html>
