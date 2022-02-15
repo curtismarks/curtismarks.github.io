@@ -20,14 +20,30 @@ var init = function (window) {
         ////////////////////////////////////////////////////////////
         
         // TODO 1 : Declare and initialize our variables
-
-
+        var circle; //underfined variable that will hold circle
+        var circles = []; //empty array that will later hold multiple circles
         // TODO 2 : Create a function that draws a circle 
+        function drawCircle(){
+            circle = draw.randomCircleInArea(canvas, true, '#999', 2); //call rhe random circle function, creates a circle,
+            physikz.addRandomVelocity(circle, canvas,5,5); //adds random velocity
+            view.addChild(circle); //add cicle to canvas
+            circles.push(circle);//push method pushes individual to array
+        }
+
+        // TODO 3,7, and 8 : Call the drawCircle() function 
+        //manually repectively draw circles
+        /*
+        drawCircle();
+        drawCircle();
+        drawCircle();
+        drawCircle();
+        drawCircle();
+        */
+       //draws circles up to 100
+       for (var i = 0; i <= 100; i++){
+        drawCircle(i);
+       }
         
-
-        // TODO 3 / 8 : Call the drawCircle() function 
-
-
         ////////////////////////////////////////////////////////////
         ///////////////// PROGRAM LOGIC ////////////////////////////
         ////////////////////////////////////////////////////////////
@@ -38,14 +54,31 @@ var init = function (window) {
         and check to see if it has drifted off the screen.         
         */
         function update() {
-            // TODO 4 : Update the circle's position //
-
-            
+            // TODO 4 : Update the circle's position 
+            //manually repctively updating circles
+            /*
+            physikz.updatePosition(circles[0]);
+            physikz.updatePosition(circles[1]);
+            physikz.updatePosition(circles[2]);
+            physikz.updatePosition(circles[3]);
+            physikz.updatePosition(circles[4]);
+            */
             // TODO 5 / 10 : Call game.checkCirclePosition() on your circles.
-           
-
+            //manually repctively checking circles
+            /*
+            game.checkCirclePosition(circles[0]);
+            game.checkCirclePosition(circles[1]);
+            game.checkCirclePosition(circles[2]);
+            game.checkCirclePosition(circles[3]);
+            game.checkCirclePosition(circles[4]);
+            */
             // TODO 9 : Iterate over the array
-           
+            //moves all circles at once
+            for (var m = 0; m<circles.length; m++){
+                physikz.updatePosition(circles[m]);
+                game.checkCirclePosition(circles[m]);
+            }
+            
             
         }
     
@@ -57,15 +90,30 @@ var init = function (window) {
         game.checkCirclePosition = function(circle) {
 
             // if the circle has gone past the RIGHT side of the screen then place it on the LEFT
-            if ( circle.x > canvas.width ) {
+            if ( circle.x > canvas.width) {
                 circle.x = 0;
             }
+
+            // if the circle has gone past the LEFT side of the screen then place it on the RIGHT
+            if ( circle.x < 0) {
+                circle.x = canvas.width;
+            }
+
+            // if the circle has gone past the TOP side of the screen then place it on the BOTTOM
+            if ( circle.y > canvas.height) {
+                circle.y = 0;
+            }
+
+            // if the circle has gone past the BOTTOM side of the screen then place it on the TOP
+            if ( circle.y < 0) {
+                circle.y = canvas.height;
+            }
+
+            // TODO 6 : YOUR CODE STARTS HERE //////////////////////
             
-            // TODO 7 : YOUR CODE STARTS HERE //////////////////////
             
 
-
-            // YOUR TODO 7 CODE ENDS HERE //////////////////////////
+            // YOUR TODO 6 CODE ENDS HERE //////////////////////////
         }
         
         /////////////////////////////////////////////////////////////
