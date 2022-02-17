@@ -2,9 +2,20 @@
 
 <html>
     <head>
+        <style>
+            body {
+                background: url("backgroundpic_mrrogers.jpg") no-repeat center center fixed;;
+                background-color: #cccccc;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
         <meta charset="utf-8">
 
         <title>Operation Spark || Motion Poem</title>
+       
         <meta name="description" content="Operation Spark Motion Poem">
         <meta name="author" content="operationspark.org">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,22 +34,17 @@
         <script src="js/init.js"></script>
         
         <style type="text/css">
-            /*override default styles here*/
-            body {
-                background-image: url("../../images/run-forest-run.jpg");
-            }
+            body { background-image: url("../../images/run-forest-run.jpg"); }
         </style>
     </head>
     <body>
-        
         <div>
-            <canvas src="canvas" width="600" height="600"></canvas>
-            
+            <canvas id="canvas" width="500" height="500"></canvas>
         </div>
         <script id="motion-poem">
             (function(){
                 init(window);
-                window.opspark.makeGame();              
+                window.opspark.makeGame();
             })();
         </script>
     </body>
