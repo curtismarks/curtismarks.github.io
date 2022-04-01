@@ -35,7 +35,8 @@ var init = function (window) {
     var background = opspark.makeBackground(app,ground);
     view.addChild(background);
     
-    var help = draw.textfield('MOVES || up: jump | right: flying jump | down: duck | space: fire | q self destruct!', 
+    //I have switch up the moves, it's part of the april fool gag. 
+    var help = draw.textfield('MOVES || up: fire | right: duck | down: flying jump | space: jump | q self destruct!', 
         '20px Arial',
         '#ccc', 'left');
     help.x = 10;

@@ -16,9 +16,9 @@ var level01 = function (window) {
             "number": 1, 
             "speed": -3,
             "gameItems": [
-                { "type": "sawblade", "x": 400, "y": groundY -100},
-                { "type": "sawblade", "x": 600, "y": groundY -100},
-                { "type": "sawblade", "x": 800, "y": groundY -100},
+                { "type": "drones", "x": 400, "y": groundY -100},
+                { "type": "drones", "x": 600, "y": groundY -100},
+                { "type": "drones", "x": 800, "y": groundY -100},
 
                 { "type": "guard", "x": 500, "y": groundY -100},
                 { "type": "guard", "x": 700, "y": groundY -100},
@@ -28,19 +28,20 @@ var level01 = function (window) {
 
                 { "type": "witch", "x": 900, "y": groundY -100},
 
-                { "type": "reward", "x": 200, "y": groundY -100},
-                { "type": "reward", "x": 300, "y": groundY -100},
-                { "type": "reward", "x": 350, "y": groundY -100},
+                { "type": "half-dollar", "x": 200, "y": groundY -100},
+                { "type": "dollar", "x": 200, "y": groundY -100},
+                { "type": "Hundred", "x": 300, "y": groundY -100},
+                { "type": "half", "x": 350, "y": groundY -100},
             ]
     };
     window.levelData = levelData;
      // set this to true or false depending on if you want to see hitzones
-    game.setDebugMode(true);
+    game.setDebugMode(false);
 
     // TODO 6 and on go here
     // BEGIN EDITING YOUR CODE HERE
 
-        function createSawBlade(x,y){
+        function createDrones(x,y){
             var hitZoneSize = 25;
             var damageFromObstacle = 10;
             var sawBladeHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);
@@ -48,18 +49,18 @@ var level01 = function (window) {
             sawBladeHitZone.y = y;
             game.addGameItem(sawBladeHitZone);
 
-            var obstacleImage = draw.bitmap('img/sawblade.png');
+            var obstacleImage = draw.bitmap('img/Drones.png');
             sawBladeHitZone.addChild(obstacleImage);
             obstacleImage.x = -20;
             obstacleImage.y = -20;
-            sawBladeHitZone.rotationalVelocity = 5; //rotates the saw blades
-           
+            obstacleImage.scaleX = 0.20;
+            obstacleImage.scaleY = 0.20;
         }
         
         function createGuard(x,y){
 
             var guard = game.createGameItem('enemy', 25);
-            var royalGuard = draw.rect(50, 50, 'red');
+            var royalGuard = draw.rect(50, 50, 'img/guard.png');
             royalGuard.x = -25;
             royalGuard.y = -25;
             guard.addChild(royalGuard);
@@ -71,12 +72,12 @@ var level01 = function (window) {
             guard.onprojectileCollision = function(){
                 game.increaseScore(10);
                 console.log('The enemy has it Halle');
-                guard.shrink(100,100);
+                guard.shrink(100, 100);
             }
-            //the function detects if the proctjectile collides with halle and 
+            
             guard.onPlayerCollision = function(){
-                game.increaseScore(10);
-                guard.flyTo(100,100);
+                game.changeIntergrity(10);
+                guard.flyTo(100, 100);
             };
 
             guard.x = x;
@@ -86,25 +87,26 @@ var level01 = function (window) {
         function createKing(x,y){
 
             var king = game.createGameItem('king', 25);
-            var kingMad = draw.rect(50, 50, 'red');
-            kingMad.x = -25;
-            kingMad.y = -25;
-            king.addChild(kingMad);
+            var kingIsMad = draw.rect(50, 50, 'img/king.png');
+            kingIsMad.x = -25;
+            kingIsMad.y = -25;
+            king.addChild(kingIsMad);
             king.x = 400;
             king.x = groundY -50;
-            game.addGameItem(kingMad);
+            game.addGameItem(kingIsMad);
             king.velocityX = -1; //move the enemy 1 pixel to the left
 
-            king.onprojectileCollision = function(){
-                game.increaseScore(10);
-                console.log('The enemy has it Halle');
-                king.shrink(100,100);
-            }
-            //the function detects if the proctjectile collides with halle and 
-            king.onPlayerCollision = function(){
-                game.increaseScore(10);
-                king.flyTo(100,100);
-            };
+           //The function detects if the projectile collides with enemy and the points will increase
+           king.onprojectileCollision = function(){
+            game.increaseScore(10);
+            king.shrink(100, 100);
+        }
+
+        //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
+        king.onPlayerCollision = function(){
+            game.changeIntergrity(50);
+            console.log('The enemy has it Halle');
+        };
 
             king.x = x;
             king.y = y;
@@ -113,7 +115,7 @@ var level01 = function (window) {
         function createWitch(x,y){
 
             var witch = game.createGameItem('witch', 25);
-            var evilWitch = draw.rect(50, 50, 'red');
+            var evilWitch = draw.rect(50, 50, 'img/witch.png');
             evilWitch.x = -25;
             evilWitch.y = -25;
             witch.addChild(evilWitch);
@@ -122,70 +124,166 @@ var level01 = function (window) {
             game.addGameItem(evilWitch);
             witch.velocityX = -1; //move the enemy 1 pixel to the left
 
-            witch.onprojectileCollision = function(){
-                game.increaseScore(10);
-                console.log('The enemy has it Halle');
-                witch.shrink(100,100);
-            }
-            //the function detects if the proctjectile collides with halle and 
-            witch.onPlayerCollision = function(){
-                game.increaseScore(10);
-                witch.flyTo(100,100);
-            };
+           //The function detects if the projectile collides with enemy and the points will increase
+           witch.onprojectileCollision = function(){
+            game.increaseScore(10);
+            witch.shrink(100, 100);
+        }
+
+        //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
+        witch.onPlayerCollision = function(){
+            game.changeIntergrity(100);
+            console.log('The enemy has it Halle');
+        };
 
             witch.x = x;
             witch.y = y;
         }
 
-        function createReward(x,y){
-
-            //the function detects if the proctjectile collides with halle and
-        
-        
+        function createHalfDollar(x, y){
 
             var reward = game.createGameItem('reward', 25);
-            var blueSquare = draw.rect(50, 50, 'blue');
-            blueSquare.x = -25;
-            blueSquare.y = -25;
-            reward.addChild(blueSquare);
+            var coin = draw.rect(50, 50, 'img/half-dollar.png');
+            coin.x = -25;
+            coin.y = -25;
+            reward.addChild(coin);
             reward.x = 400;
             reward.x = groundY -50;
-            game.addGameItem(blueSquare);
+            game.addGameItem(coin);
             reward.velocityX = -1; //move the enemy 1 pixel to the left
 
             reward.x = x;
             reward.y = y;
 
-            //The function will
+            //The function detects if the projectile collides with enemy and the points will increase
             reward.onprojectileCollision = function(){
                 game.increaseScore(10);
-                console.log('The enemy has it Halle');
-                enemy.shrink(100,100);
+                reward.shrink(100, 100);
             }
 
-            //the function detects if the proctjectile collides with halle and
+            //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
             reward.onPlayerCollision = function(){
                 game.changeIntergrity(10);
-                game.increaseScore(10);
-                reward.flyTo(100,100);
+                console.log('The enemy has it Halle');
             };
         }
         
+        function createDollar(x, y){
+
+            var reward = game.createGameItem('reward', 25);
+            var dollar = draw.rect(50, 50, 'img/1_dollar_bill.png');
+            dollar.x = -25;
+            dollar.y = -25;
+            reward.addChild (dollar);
+            reward.x = 400;
+            reward.x = groundY -50;
+            game.addGameItem (dollar);
+            reward.velocityX = -1; //move the enemy 1 pixel to the left
+
+            reward.x = x;
+            reward.y = y;
+
+            //The function detects if the projectile collides with enemy and the points will increase
+            reward.onprojectileCollision = function(){
+                game.increaseScore(10);
+                reward.shrink(100, 100);
+            }
+
+            //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
+            reward.onPlayerCollision = function(){
+                game.changeIntergrity(10);
+                console.log('The enemy has it Halle');
+            };
+        }
         
+        function createTenDollars(x, y){
+
+            var reward = game.createGameItem('reward', 25);
+            var dollars = draw.rect(50, 50, 'img/10_dollar_bill.png');
+            dollars.x = -25;
+            dollars.y = -25;
+            reward.addChild (dollars);
+            reward.x = 400;
+            reward.x = groundY -50;
+            game.addGameItem (dollars);
+            reward.velocityX = -1; //move the enemy 1 pixel to the left
+
+            reward.x = x;
+            reward.y = y;
+
+            //The function detects if the projectile collides with enemy and the points will increase
+            reward.onprojectileCollision = function(){
+                game.increaseScore(10);
+                reward.shrink(100, 100);
+            }
+
+            //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
+            reward.onPlayerCollision = function(){
+                game.changeIntergrity(10);
+                console.log('The enemy has it Halle');
+            };
+        }
+
+        function createHundredDollars(x, y){
+
+            var reward = game.createGameItem('reward', 25);
+            var coin = draw.rect(50, 50, 'img/100_dollar_bill.png');
+            coin.x = -25;
+            coin.y = -25;
+            reward.addChild (coin);
+            reward.x = 400;
+            reward.x = groundY -50;
+            game.addGameItem (coin);
+            reward.velocityX = -1; //move the enemy 1 pixel to the left
+
+            reward.x = x;
+            reward.y = y;
+
+            //The function detects if the projectile collides with enemy and the points will increase
+            reward.onprojectileCollision = function(){
+                game.increaseScore(10);
+                reward.shrink(100, 100);
+            }
+
+            //the function detects if the enemy collides with Halle and the enemy will deal damage to Halle
+            reward.onPlayerCollision = function(){
+                game.changeIntergrity(10);
+                console.log('The enemy has it Halle');
+            };
+        }
 
         for(var i = 0;i < levelData.gameItems.length;i++){
             var gameItem = levelData.gameItems[i];
 
-            if (gameItem.type === "sawblade"){
-                createSawBlade(gameItem.x,gameItem.y);
+            if (gameItem.type === "drones"){
+                createDrones(gameItem.x, gameItem.y);
             }
 
             if (gameItem.type === "guard") {
-                createGuard(gameItem.x,gameItem.y);
+                createGuard(gameItem.x, gameItem.y);
             }
 
-            if (gameItem.type === "reward") {
-                createReward(gameItem.x,gameItem.y);
+            if (gameItem.type === "king") {
+                createKing(gameItem.x, gameItem.y);
+            }
+
+            if (gameItem.type === "witch") {
+                createWitch(gameItem.x, gameItem.y);
+            }
+
+            if (gameItem.type === "half-dollar") {
+                createHalfDollar(gameItem.x, gameItem.y);
+            }
+            if (gameItem.type === "dollar") {
+                createDollar(gameItem.x, gameItem.y);
+            }
+
+            if (gameItem.type === "ten") {
+                createTenDollars(gameItem.x, gameItem.y);
+            }
+
+            if (gameItem.type === "hundred") {
+                createHundredDollars(gameItem.x, gameItem.y);
             }
         }
         // DO NOT EDIT CODE BELOW HERE

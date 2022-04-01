@@ -67,9 +67,9 @@
         }
         
         function onKeyDown(e) {
-            if (activeKeys[KEYCODE_RIGHT]) {
+            if (activeKeys[KEYCODE_DOWN]) {
                 player.jumpfly();
-            } else if (activeKeys[KEYCODE_UP]) {
+            } else if (activeKeys[KEYCODE_SPACE]) {
                 player.jump();
             } else if (activeKeys[KEYCODE_Q]) {
                 player.die();
@@ -77,12 +77,12 @@
                     document.location.reload()
                     alert("press enter to start over");
                 }, 1100);
-            } else if (activeKeys[KEYCODE_DOWN]) {
+            } else if (activeKeys[KEYCODE_RIGHT]) {
                 player.duckin();
                 _state = 'ducking';
             }
             
-            if (activeKeys[KEYCODE_SPACE]) { 
+            if (activeKeys[KEYCODE_UP]) { 
                 player.shoot();
             }
         }
