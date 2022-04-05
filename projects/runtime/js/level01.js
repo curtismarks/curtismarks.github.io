@@ -16,33 +16,33 @@ var level01 = function (window) {
             "number": 1, 
             "speed": -3,
             "gameItems": [
-                { "type": "drones", "x": 400, "y": groundY -100},
-                { "type": "drones", "x": 600, "y": groundY -100},
-                { "type": "drones", "x": 800, "y": groundY -100},
+                { "type": "drones", "x": 400, "y": groundY -115},
+                { "type": "drones", "x": 600, "y": groundY -115},
+                { "type": "drones", "x": 800, "y": groundY -115},
 
                 { "type": "guard", "x": 500, "y": groundY -100},
                 { "type": "guard", "x": 700, "y": groundY -100},
                 { "type": "guard", "x": 900, "y": groundY -100},
 
-                { "type": "king", "x": 900, "y": groundY -100},
+                { "type": "king", "x": 1100, "y": groundY -100},
 
-                { "type": "witch", "x": 900, "y": groundY -100},
+                { "type": "witch", "x": 1300, "y": groundY -100},
 
                 { "type": "half-dollar", "x": 200, "y": groundY -100},
-                { "type": "dollar", "x": 200, "y": groundY -100},
-                { "type": "Hundred", "x": 300, "y": groundY -100},
-                { "type": "half", "x": 350, "y": groundY -100},
+                { "type": "dollar", "x": 350, "y": groundY -100},
+                { "type": "Hundred", "x": 450, "y": groundY -100},
+                { "type": "half", "x": 550, "y": groundY -100},
             ]
     };
     window.levelData = levelData;
      // set this to true or false depending on if you want to see hitzones
-    game.setDebugMode(false);
+    game.setDebugMode(true);
 
     // TODO 6 and on go here
     // BEGIN EDITING YOUR CODE HERE
 
         function createDrones(x,y){
-            var hitZoneSize = 25;
+            var hitZoneSize = 20;
             var damageFromObstacle = 10;
             var sawBladeHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);
             sawBladeHitZone.x = x;
@@ -51,8 +51,8 @@ var level01 = function (window) {
 
             var obstacleImage = draw.bitmap('img/Drones.png');
             sawBladeHitZone.addChild(obstacleImage);
-            obstacleImage.x = -20;
-            obstacleImage.y = -20;
+            obstacleImage.x = -90;
+            obstacleImage.y = -40;
             obstacleImage.scaleX = 0.20;
             obstacleImage.scaleY = 0.20;
         }

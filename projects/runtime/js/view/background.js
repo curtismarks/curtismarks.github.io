@@ -64,7 +64,7 @@ var background = function (window) {
             background.addChild(moon);
 
             // TODO 5: Part 1 - Add buildings!     Q: This is before TODO 4 for a reason! Why?
-            //everytime this loop runs, it creates a building with an x and y value and pushes it to 
+            //everytime this loop runs, it creates a building(s) and places the buildings randomly (can also place a build more than once)
             for(var i=0;i<5;++i) {
                 var houseRndm = Math.floor(Math.random() * 5);
                 if (houseRndm == 0){
@@ -79,11 +79,13 @@ var background = function (window) {
                     buildings[i] = draw.bitmap('img/house_5.png');
                 }
             }
+
+            //this for loop can resize the buildings all at once and can make each building re-enters from the right side of the screen, once it goes through -200.
             for (var i = 0; i < buildings.length; i++) {
-                buildings[i].x = 160 * (i + 1);
+                buildings[i].x = 160 * (i + .1);//gives space for the buldings.
                 buildings[i].y = groundY - 288;
-                buildings[i].scaleX = 0.5;
-                buildings[i].scaleY = 0.5;
+                buildings[i].scaleX = 0.24;
+                buildings[i].scaleY = 0.24;
                 background.addChild(buildings[i]);
             }
             // TODO 4: Part 1 - Add a tree
@@ -114,9 +116,9 @@ var background = function (window) {
             // TODO 5: Part 2 - Parallax
             //if the buildings reach less than -200 pixels, it re-enters from the right
             for (var i = 0; i < buildings.length; i++){
-                buildings[i].x = buildings[i].x - 0.5;
+                buildings[i].x = buildings[i].x - 1.5;
                 if (buildings[i].x < -200){
-                    buildings[i].x = canvaswidth;
+                    buildings[i].x = canvasWidth;
                 }
             }
 
@@ -124,47 +126,48 @@ var background = function (window) {
 
         } // end of update function - DO NOT DELETE
         
+        //This function will can resize, move, and adds each houses\.
         function buildRndm(buildIndx){
             var rndhouse = Math.floor(Math.random() * 5)
             if (rndhouse == 0){
                 background.removeChild(buildings[buildIndx]);
-                buildings[buildIndx] = draw.bitmap(houses.house_0);
-                buildings[buildIndx].x = canvasWidth;
-                buildings[buildIndx].y = groundY - 288;
+                buildings[buildIndx] = draw.bitmap(houses.house_1);
+                buildings[buildIndx].x = canvasWidth -288;
+                buildings[buildIndx].y = groundY -288;
                 buildings[buildIndx].scaleX = 0.5;
-                buildings[buildIndx].scaleY = 0.45;
+                buildings[buildIndx].scaleY = 0.5;
                 background.addChild(buildings[buildIndx]);
             } else if (rndhouse == 1){
                 background.removeChild(buildings[buildIndx]);
-                buildings[buildIndx] = draw.bitmap(houses.house_0);
+                buildings[buildIndx] = draw.bitmap(houses.house_2);
                 buildings[buildIndx].x = canvasWidth;
-                buildings[buildIndx].y = groundY - 288;
+                buildings[buildIndx].y = groundY
                 buildings[buildIndx].scaleX = 0.5;
-                buildings[buildIndx].scaleY = 0.45;
-                background.addChild(buildings[buildIndex]);
+                buildings[buildIndx].scaleY = 0.5;
+                background.addChild(buildings[buildIndx]);
             } else if (rndhouse == 2){
                 background.removeChild(buildings[buildIndx]);
-                buildings[buildIndx] = draw.bitmap(houses.house_0);
+                buildings[buildIndx] = draw.bitmap(houses.house_3);
                 buildings[buildIndx].x = canvasWidth;
-                buildings[buildIndx].y = groundY - 288;
+                buildings[buildIndx].y = groundY;
                 buildings[buildIndx].scaleX = 0.5;
-                buildings[buildIndx].scaleY = 0.45;
+                buildings[buildIndx].scaleY = 0.5;
                 background.addChild(buildings[buildIndx]);
             } else if (rndhouse == 3){
                 background.removeChild(buildings[buildIndx]);
-                buildings[buildIndx] = draw.bitmap(houses.house_0);
+                buildings[buildIndx] = draw.bitmap(houses.house_4);
                 buildings[buildIndx].x = canvasWidth;
                 buildings[buildIndx].y = groundY - 288;
                 buildings[buildIndx].scaleX = 0.5;
-                buildings[buildIndx].scaleY = 0.45;
+                buildings[buildIndx].scaleY = 0.5;
                 background.addChild(buildings[buildIndx]);
             } else if (rndhouse == 4){
                 background.removeChild(buildings[buildIndx]);
-                buildings[buildIndx] = draw.bitmap(houses.house_0);
+                buildings[buildIndx] = draw.bitmap(houses.house_5);
                 buildings[buildIndx].x = canvasWidth;
                 buildings[buildIndx].y = groundY - 288;
                 buildings[buildIndx].scaleX = 0.5;
-                buildings[buildIndx].scaleY = 0.45;
+                buildings[buildIndx].scaleY = 0.5;
                 background.addChild(buildings[buildIndx]);
             }
         }
