@@ -23,10 +23,10 @@ function runProgram(){
   }
   //  one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on("keyDown",handleKeyDown)    // change 'eventType' to the type of event you want to handle
-  $(document).on("keyUp",handleKeyDown)    // change 'eventType' to the type of event you want to handle
-  $(document).on("keyLeft",handleKeyDown)    // change 'eventType' to the type of event you want to handle
-  $(document).on("keyRight",handleKeyDown)    // change 'eventType' to the type of event you want to handle
+  $(document).on("keydown", handleKeyDown);    // change 'eventType' to the type of event you want to handle
+  $(document).on("keyup", handleKeyDown);    // change 'eventType' to the type of event you want to handle
+  $(document).on("keyleft", handleKeyDown);    // change 'eventType' to the type of event you want to handle
+  $(document).on("keyright", handleKeyDown);    // change 'eventType' to the type of event you want to handle
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -37,28 +37,28 @@ function runProgram(){
   function newFrame() {
     repositionGameItem();
     redrawGameItem();
-   
+
   }
   
   /* 
   Called in response to events.
   */
   function handleKeyDown(event) {
-    if(event.which === KEY.LEFT){
-      speedX = -5;
-      console.log("You've moved left. YAY!!!");
+    if(event.which === KEY.DOWN){
+      speedY = 5;
+      console.log("You've moved down. YAY!!!");
     }
-    if (event.which === KEY.RIGHT){
-      speedX = 5;
+    if(event.which === KEY.RIGHT){
+      speedX = -5;
       console.log("You've moved right. YAY!!!");
     }
     if(event.which === KEY.UP){
-      speedY = -5
-      console.log("You've moved up. YAY!!!");
+      speedY = -5;
+      console.log("You've moved right. YAY!!!");
     }
-    if(event.which === KEY.DOWN){
-      speedY = 5
-      console.log("You've moved down. YAY!!!");
+    if(event.which === KEY.LEFT){
+      speedX = 5;
+      console.log("You've moved left. YAY!!!");
     }
   }
 
@@ -71,10 +71,9 @@ function runProgram(){
   }
 
   function redrawGameItem(){
-    $("#walker").css("LEFT", positionX);
-    $("#walker").css("UP", positionY);
-    $("#walker").css("DOWN", positionY);
-    $("#walker").css("RIGHT", positionX);
+    $("#walker").css("top", positionY);
+    $("#walker").css("left", positionX);
+    
   }
   
   function endGame() {
