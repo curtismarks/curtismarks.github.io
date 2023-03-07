@@ -25,6 +25,8 @@ function runProgram(){
     var item={
       x: x,
       y: y,
+      positionX:0,
+      positionY:0,
       speedX: speedX,
       speedY: speedY,
       h: $(id).height(),
@@ -35,7 +37,8 @@ function runProgram(){
   }
 
   
-
+  var player1Score = 0;
+  var player2Score = 0;
   var player1 = GameItem(10, 200, 0, 0, '#player1');
   var player2 = GameItem(BOARD_WIDTH - 10 - $('#player2').width(), 200, 0, 0, '#player2');
   var ball = GameItem(BOARD_WIDTH / 2, BOARD_HEIGHT / 2,(Math.random() > 0.5 ? -3 : 3), (Math.random() > 0.5 ? -3 : 3),'#ball');
@@ -60,9 +63,12 @@ function runProgram(){
     UpdateItem(player1);
     UpdateItem(player2);
     UpdateItem(ball);
-    stopBall();
-    stopPlayers();
-    wallCollsion(ball);
+    wallCollsionBall(ball);
+    wallCollsion(player1);
+    wallCollsion(player2);
+    drawScore();
+    ballHitPaddle();
+    endGame();
   }
   
   /* 
@@ -102,33 +108,103 @@ function runProgram(){
     $(obj.id).css("left", obj.x);
   }
 
+  function drawScore(){
+    $('#scoreIDPlayer1').text(player1Score);
+    $('#scoreIDPlayer2').text(player2Score);
+  }
   function wallCollsion(obj){
-    return obj < 0 ? 0 : obj > 255 ? 255 : obj;
+    if(obj.y < 0){
+      obj.y = 0;
+    }
+    if(obj.y > BOARD_HEIGHT - obj.h){
+      obj.y = BOARD_HEIGHT  - obj.h;
+    }
   }
 
+  //sets ball to original locations
+  function resetBall(){
+    ball.x = BOARD_WIDTH / 2;
+    ball.y = BOARD_HEIGHT / 2;
+    ball.speedX = (Math.random() > 0.5 ? -3 : 3);
+    ball.speedY = (Math.random() > 0.5 ? -3 : 3);
+  }
+
+  // if obj (ball) hits the y walls, ball set goes back to middle
+  function wallCollsionBall(obj){
+    if(obj.x > BOARD_WIDTH - obj.w){
+      //award to points to other player
+      player1Score++;
+      //reset ball to middle
+      resetBall();
+    }
+    if(obj.x < 0){
+      //award to points to other player
+      player2Score++;
+      //reset ball to middle
+      resetBall();
+    }
+    if(obj.y > BOARD_HEIGHT - obj.h){
+      //bounce off of bottom border
+      obj.speedY = -obj.speedY;
+    }
+    if(obj.y < 0){
+      //bounces off of top border
+      obj.speedY = -obj.speedY;
+    }
+  }
+ 
   function doCollide(obj1, obj2) {
-    return obj1 - obj2;
-  }
-  
-  if (doCollide(ball, player1)) {
-    ball.speedY = 5;
-  }
+    // TODO: calculate and store the remaining
+    // sides of the obj1
+    obj1.leftX = obj1.x;
+    obj1.topY = obj1.y;
+    obj1.rightX = obj1.x + $(obj1.id).width();
+    obj1.bottomY = obj1.y + $(obj1.id).height();
+    // TODO: Do the same for obj2
+    obj2.leftX = obj2.x;
+    obj2.topY = obj2.y;
+    obj2.rightX = obj2.x + $(obj2.id).width();
+    obj2.bottomY = obj2.y + $(obj2.id).height();
+    // TODO: Return true if they are overlapping, false otherwise
+	  if ((obj1.rightX > obj2.leftX)&& 
+      (obj1.leftX < obj2.rightX)&&
+      (obj1.bottomY > obj2.topY)&& 
+      (obj1.topY < obj2.bottomY)
+    ){
+      return true;
+    }else{
+      return false;
+    }
+}
 
-  if (doCollide(ball, player2)) {
-    ball.speedY = -5;
+function ballHitPaddle() {
+  if(doCollide(ball, player1)){
+    //change speed of ball
+    //reverse ball
+    ball.speedX = -ball.speedX;
   }
-
+  if(doCollide(ball, player2)){
+    //change speed of ball
+    //reverse ball
+    ball.speedX = -ball.speedX;
+  }
+}
   function UpdateItem(obj){
     obj.x = obj.x + obj.speedX;
     obj.y = obj.y + obj.speedY;
   }
   
   function endGame() {
-    // stop the interval timer
+    if (player1Score === 10 || player2Score === 10) {
+      // stop the interval timer
     clearInterval(interval);
-
     // turn off event handlers
     $(document).off();
+    $('#GameOver').show();
+    }else{
+      $('#GameOver').hide();
+    }
+    
   }
 
 }

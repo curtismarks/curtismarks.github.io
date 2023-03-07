@@ -29,10 +29,31 @@ body {
   top: 100px;  /* Uncomment if you want to set a "starting" position */
 }
 #ball{
-  background-color: lightsteelblue;
+  background-color: rgb(40, 6, 95);
   width: 20px;
   height: 20px;
   border-radius: 50%;
   position: absolute;
   border: 1px solid lightslategray;
+}
+#scoreIDPlayer1{
+  font-size: 3vw;
+  color: white;
+  position: absolute;
+  left: 100px;
+  top: 50px;
+}
+#scoreIDPlayer2{
+  font-size: 3vw;
+  color: white;
+  position: absolute;
+  left: 900px;
+  top: 50px;
+}
+#GameOver{
+  font-size: 3vw;
+  color: white;
+  position: absolute;
+  left: 450px;
+  top: 250px;
 }
