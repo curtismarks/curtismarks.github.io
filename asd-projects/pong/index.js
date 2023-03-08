@@ -175,20 +175,20 @@ function runProgram(){
     }else{
       return false;
     }
-}
+  }
 
-function ballHitPaddle() {
-  if(doCollide(ball, player1)){
-    //change speed of ball
-    //reverse ball
-    ball.speedX = -ball.speedX;
+  function ballHitPaddle() {
+    if(doCollide(ball, player1)){
+      //change speed of ball
+      //reverse ball
+      ball.speedX = -ball.speedX;
+    }
+    if(doCollide(ball, player2)){
+      //change speed of ball
+      //reverse ball
+      ball.speedX = -ball.speedX;
+    }
   }
-  if(doCollide(ball, player2)){
-    //change speed of ball
-    //reverse ball
-    ball.speedX = -ball.speedX;
-  }
-}
   function UpdateItem(obj){
     obj.x = obj.x + obj.speedX;
     obj.y = obj.y + obj.speedY;
