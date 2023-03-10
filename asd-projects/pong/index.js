@@ -10,10 +10,12 @@ function runProgram(){
   // Constant Variables
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  
+
+  //size limit of the board
   const BOARD_WIDTH = $('#board').width();
   const BOARD_HEIGHT = $('#board').height();
 
+  //keys that make the paddles move.
   var KEY ={
     "UP": 38,
     "DOWN": 40,
@@ -36,7 +38,7 @@ function runProgram(){
     return item;
   }
 
-  
+  //variables that helps the game function
   var player1Score = 0;
   var player2Score = 0;
   var player1 = GameItem(10, 200, 0, 0, '#player1');
@@ -72,7 +74,7 @@ function runProgram(){
   }
   
   /* 
-  Called in response to events.
+  Called in response to pressed events.
   */
   function handleKeyDown(event) {
     if(event.which === KEY.S){
@@ -93,6 +95,9 @@ function runProgram(){
       console.log("s pressed");
     }
   }
+  /* 
+  Called in response to released events.
+  */
   function handleKeyUp(event) {
     if(event.which === KEY.DOWN || event.which === KEY.UP || event.which === KEY.W || event.which === KEY.S){
       player1.speedY = 0;
@@ -103,15 +108,19 @@ function runProgram(){
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
+  //positions each object to their spot 
   function drawItem(obj){
     $(obj.id).css("top", obj.y);
     $(obj.id).css("left", obj.x);
   }
 
+  //updates the score
   function drawScore(){
     $('#scoreIDPlayer1').text(player1Score);
     $('#scoreIDPlayer2').text(player2Score);
   }
+
+  //class when obj hits the wall
   function wallCollsion(obj){
     if(obj.y < 0){
       obj.y = 0;
@@ -129,7 +138,7 @@ function runProgram(){
     ball.speedY = (Math.random() > 0.5 ? -3 : 3);
   }
 
-  // if obj (ball) hits the y walls, ball set goes back to middle
+  // if ball hits the y walls, ball set goes back to middle whenever it hits left wall or right wall
   function wallCollsionBall(obj){
     if(obj.x > BOARD_WIDTH - obj.w){
       //award to points to other player
@@ -189,11 +198,14 @@ function runProgram(){
       ball.speedX = -ball.speedX;
     }
   }
+
+  //response to the speed of item.x and item.y
   function UpdateItem(obj){
     obj.x = obj.x + obj.speedX;
     obj.y = obj.y + obj.speedY;
   }
   
+  //response to the points (10) to end
   function endGame() {
     if (player1Score === 10 || player2Score === 10) {
       // stop the interval timer
