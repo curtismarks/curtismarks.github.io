@@ -204,6 +204,7 @@ function runProgram(){
     obj.x = obj.x + obj.speedX;
     obj.y = obj.y + obj.speedY;
   }
+
   
   //response to the points (10) to end
   function endGame() {
@@ -213,8 +214,11 @@ function runProgram(){
     // turn off event handlers
     $(document).off();
     $('#GameOver').show();
+    $('#tryAgain').show();
+   
     }else{
       $('#GameOver').hide();
+      $('#tryAgain').hide();
     }
     
   }
